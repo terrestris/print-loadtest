@@ -1,9 +1,10 @@
 #!/bin/bash
 
-host=http://localhost:1236
+host=http://172.17.0.3:8080
+
+t0=$(date +%s%N)
 
 run_single_print() {
-  t0=$(date +%s%N)
   json=$(curl -s $host'/print/shogun/report.pdf' -H 'Content-Type: application/json' -H 'Accept: */*' -H 'Cache-Control: no-cache' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' --data-binary @test.json --compressed)
 
   url=$(echo $json | jq .statusURL)
@@ -20,18 +21,21 @@ run_single_print() {
     res=$(echo $json | jq .done)
   done
 
-  t1=$(date +%s%N)
-
   status=$(echo $json | jq .status)
 
   if (test ${status:1:-1} = error) then
      echo Failed!
   else
-     echo $((($t1-$t0) / 1000000))
+     curl -s $downUrl -o $1.pdf
   fi
 }
 
 for i in $(seq 1 $1)
 do
-  run_single_print &
+  run_single_print $i &
 done
+
+wait
+
+t1=$(date +%s%N)
+echo Time: $((($t1-$t0) / 1000000))ms
