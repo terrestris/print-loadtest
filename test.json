@@ -1,0 +1,36 @@
+{
+   "attributes" : {
+      "title" : "SHOGun",
+      "map" : {
+         "layers" : [
+            {
+               "type" : "WMS",
+               "styles" : [
+                  ""
+               ],
+               "opacity" : 1,
+               "baseURL" : "https://ows.terrestris.de/osm-gray/service?",
+               "layers" : [
+                  "OSM-WMS"
+               ],
+               "customParams" : {
+                  "TILED" : true,
+                  "TRANSPARENT" : true,
+                  "VERSION" : "1.1.0",
+                  "LAYERS" : "OSM-WMS"
+               }
+            }
+         ],
+         "dpi" : 254,
+         "bbox" : [
+            -952833.712366884,
+            5367468.78690137,
+            3144435.71236688,
+            8085447.21309863
+         ],
+         "projection" : "EPSG:3857",
+         "rotation" : 0
+      }
+   },
+   "layout" : "super a0"
+}
